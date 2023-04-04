@@ -69,6 +69,8 @@ def load_training_data():
 #               [0.029815, 0.51113, 0.890595, 0.36834, 0.395795, 0.003316583, 0.18814, 0.843235, 0.59085, 0.21185]])
 # Y = np.array([[0], [1]])
 
+Y = np.array([[1,0,0],[1,0,0],[1,0,0],[1,0,0],[1,0,0],[1,0,0],[1,0,0],[1,0,0],[1,0,0],[1,0,0],[1,0,0],[1,0,0],[1,0,0],[1,0,0],[1,0,0],[1,0,0],[1,0,0],[1,0,0],[1,0,0],[1,0,0],[1,0,0],[1,0,0],[1,0,0],[1,1,0],[1,1,0],
+              [0,1,0],[0,1,0],[0,1,0],[0,1,0],[0,1,0],[0,1,0],[0,1,0],[0,1,0],[0,1,0],[0,1,0],[0,1,0],[0,1,0],[0,1,0],[0,1,0],[0,1,0],[0,1,0],[0,1,0],[0,1,0],[0,1,0],[0,1,0],[0,1,0],[0,1,0],[0,1,0],[0,1,0],[0,1,0]])
 #StandardScaler 설정
 scaler = StandardScaler()
 
@@ -88,7 +90,7 @@ hidden_size_1 = 20
 hidden_size_2 = 20
 hidden_size_3 = 20
 
-output_size = 1
+output_size = 3
 rng = Generator(PCG64(seed=425028234))
 # 가중치 랜덤 1, 2, 3
 W1 = rng.random((input_size, hidden_size_1))
@@ -124,7 +126,7 @@ np.set_printoptions(precision=20, suppress=True)
 
 # 학습률과 반복수
 learning_rate = 0.01
-num_iterations = 3000000
+num_iterations = 500000
 error_list = []
 
 error_10000 = []
@@ -158,7 +160,7 @@ for i in range(num_iterations):
     b2 += learning_rate * np.sum(delta_hidden_2, axis=0, keepdims=True)
     W1 += learning_rate * X.T.dot(delta_hidden_1)
     b1 += learning_rate * np.sum(delta_hidden_1, axis=0, keepdims=True)
-    if i % 1000 == 0:
+    if i % 10000 == 0:
         print(i,"회 반복 : ",error)
         error_list.append(abs(error))
 
@@ -194,7 +196,4 @@ for test_data, file_name in zip(test_datum, file_names):
     print("결과:", y_hat_test)
     a = y_hat_test
     print(a)
-    if y_hat_test > 0.8:
-        print("뛰었습니다")
-    else:
-        print("걸었습니다")
+
